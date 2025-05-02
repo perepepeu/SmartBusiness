@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="../../static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Lista de Produtos</h1>
+    </header>
+    <main>
+        <ul id="productList">
+            <!-- Produtos serão carregados dinamicamente -->
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2025 Organizador Financeiro para Negócios. Todos os direitos reservados.</p>
+    </footer>
+    <script type="module">
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import app from "../../static/firebase-config.js";
+
+        const db = getFirestore(app);
+
+        async function loadProducts() {
+            const productList = document.getElementById("productList");
+            const querySnapshot = await getDocs(collection(db, "products"));
+
+            querySnapshot.forEach((doc) => {
+                const product = doc.data();
+                const li = document.createElement("li");
+                li.textContent = `${product.productName} - R$${product.salePrice}`;
+                productList.appendChild(li);
+            });
+        }
+
+        loadProducts();
+    </script>
+</body>
+</html>

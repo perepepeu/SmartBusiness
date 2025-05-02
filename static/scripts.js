@@ -14,3 +14,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Erro ao interagir com o Firebase:", error);
     }
 });
+
+// Função para verificar se o usuário está logado
+export function isLoggedIn() {
+    return document.cookie.split("; ").some((cookie) => cookie.startsWith("loggedIn=true"));
+}
+
+// Função para logout
+export function logout() {
+    document.cookie = "loggedIn=; path=/; max-age=0"; // Remove o cookie
+    window.location.href = "../../index.html"; // Redireciona para index.html
+}
