@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Principal - Organizador Financeiro</title>
+    <link rel="stylesheet" href="../../static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Painel Principal</h1>
+    </header>
+    <main>
+        <p>Bem-vindo ao painel principal do Organizador Financeiro!</p>
+        <button onclick="logout()">Sair</button>
+    </main>
+    <footer>
+        <p>&copy; 2025 Organizador Financeiro para Negócios. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        // Verifica se o usuário está logado
+        if (!document.cookie.includes("loggedIn=true")) {
+            window.location.href = "../../index.html"; // Redireciona para index.html
+        }
+
+        // Função para logout
+        function logout() {
+            document.cookie = "loggedIn=; path=/; max-age=0"; // Remove o cookie
+            window.location.href = "../../index.html"; // Redireciona para index.html
+        }
+    </script>
+</body>
+</html>

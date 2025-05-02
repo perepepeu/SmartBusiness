@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Organizador Financeiro</title>
+    <link rel="stylesheet" href="../../static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Cadastro</h1>
+    </header>
+    <main>
+        <form class="login-form" id="signupForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required minlength="6">
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p>Já tem uma conta? <a href="login.html">Faça login aqui</a>.</p>
+    </main>
+    <footer>
+        <p>&copy; 2025 Organizador Financeiro para Negócios. Todos os direitos reservados.</p>
+    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCm00J9vJSwnUjAdJDgfFCISitQBTpWmNM",
+            authDomain: "smartbusiness-ca3f9.firebaseapp.com",
+            projectId: "smartbusiness-ca3f9",
+            storageBucket: "smartbusiness-ca3f9.firebasestorage.app",
+            messagingSenderId: "419276974022",
+            appId: "1:419276974022:web:413ac5aa1669335f93f4c7"
+        };
+
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Seleciona o formulário e adiciona o evento de envio
+        const signupForm = document.getElementById("signupForm");
+        signupForm.addEventListener("submit", handleSignup);
+
+        async function handleSignup(event) {
+            event.preventDefault(); // Impede o envio do formulário e o recarregamento da página
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!validateEmail(email)) {
+                alert("Por favor, insira um e-mail válido.");
+                return;
+            }
+
+            try {
+                // Cria o usuário no Firebase Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Envia o e-mail de verificação
+                await sendEmailVerification(user);
+
+                alert("Conta criada com sucesso! Verifique seu e-mail antes de fazer login.");
+                document.cookie = "loggedIn=true; path=/; max-age=86400"; // Expira em 1 dia
+                window.location.href = "login.html"; // Redireciona para a página de login
+            } catch (error) {
+                console.error("Erro ao criar conta:", error);
+                alert("Erro ao criar conta. Por favor, tente novamente.");
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html>

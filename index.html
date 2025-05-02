@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador Financeiro para Negócios</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                <li><a href="#beneficios">Benefícios</a></li>
+                <li><a href="template/login/login.html">Login</a></li>
+            </ul>
+        </nav>
+        <h1>Bem-vindo ao Organizador Financeiro</h1>
+        <p>Transforme a maneira como você gerencia suas finanças.</p>
+    </header>
+    <main>
+        <section id="sobre">
+            <h2>Sobre o Projeto</h2>
+            <p>Este organizador foi desenvolvido para ajudar empresários a gerenciar suas finanças de maneira prática e eficiente.</p>
+        </section>
+        <section id="funcionalidades">
+            <h2>Funcionalidades</h2>
+            <ul>
+                <li>Controle de receitas e despesas</li>
+                <li>Relatórios financeiros detalhados</li>
+                <li>Integração com Firebase para segurança e escalabilidade</li>
+            </ul>
+        </section>
+        <section id="beneficios">
+            <h2>Por que escolher este organizador?</h2>
+            <p>Nosso organizador financeiro oferece:</p>
+            <ul>
+                <li>Interface simples e intuitiva</li>
+                <li>Segurança de dados com tecnologia Firebase</li>
+                <li>Relatórios personalizados para tomada de decisão</li>
+                <li>Suporte dedicado para ajudar você a crescer</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Organizador Financeiro para Negócios. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        // Verifica se o usuário está logado
+        if (document.cookie.includes("loggedIn=true")) {
+            window.location.href = "template/main.html"; // Redireciona para main.html
+        }
+    </script>
+</body>
+</html>
