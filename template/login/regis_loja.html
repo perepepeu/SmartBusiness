@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Loja</title>
+    <link rel="stylesheet" href="../../static/styles.css">
+    <style>
+        /* Estilo para o formulário multi-etapas */
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        fieldset {
+            border: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Garante que padding e bordas sejam incluídos no tamanho total */
+            width: 100%; /* Faz o fieldset ocupar toda a largura disponível */
+            padding: 0 15px; /* Adiciona espaçamento interno */
+        }
+
+        fieldset legend {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        fieldset label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        fieldset input, fieldset select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .form-navigation button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-navigation button[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .form-navigation button:hover:not([disabled]) {
+            background-color: #45a049;
+        }
+
+        input:invalid {
+            border: 2px solid red;
+        }
+
+        input:valid {
+            border: 2px solid green;
+        }
+
+        #physicalFields, #webFields, #bothFields {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            visibility: hidden; /* Garante que o elemento não seja clicável quando oculto */
+            padding: 0 15px; /* Adiciona espaçamento interno para evitar cortes */
+        }
+
+        #physicalFields.active, #webFields.active, #bothFields.active {
+            opacity: 1;
+            max-height: 200px; /* Aumente este valor para evitar cortes */
+            visibility: visible; /* Torna o elemento visível */
+        }
+
+        @media (max-width: 768px) {
+            fieldset input, fieldset select {
+                font-size: 0.9rem;
+            }
+
+            .form-navigation button {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+        }
+
+        .store-type-options {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .store-type-options input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        form {
+            box-sizing: border-box; /* Garante que padding e bordas sejam incluídos no tamanho total */
+            width: 100%; /* Faz o formulário ocupar toda a largura disponível */
+            padding: 0 15px; /* Adiciona um espaçamento interno nas laterais */
+            overflow: hidden; /* Evita cortes inesperados */
+        }
+
+        input, select {
+            box-sizing: border-box; /* Garante que padding e bordas sejam incluídos no tamanho total */
+            width: 100%; /* Faz os campos ocuparem toda a largura disponível */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Registro de Loja</h1>
+    </header>
+    <main>
+        <form id="registerStoreForm">
+            <!-- Etapa 1: Informações da Loja -->
+            <div class="step active">
+                <fieldset>
+                    <legend>Informações da Loja</legend>
+                    <label for="storeName">Nome da Loja:</label>
+                    <input type="text" id="storeName" name="storeName" placeholder="Digite o nome da loja" required>
+
+                    <label for="startYear">Ano de Início:</label>
+                    <input type="number" id="startYear" name="startYear" placeholder="Ex.: 2020" required min="1900" max="2099">
+
+                    <label for="storeLogo">Logo da Loja:</label>
+                    <input type="file" id="storeLogo" name="storeLogo" accept="image/*" required>
+                </fieldset>
+            </div>
+
+            <!-- Etapa 2: Informações do Dono -->
+            <div class="step">
+                <fieldset>
+                    <legend>Informações do Dono</legend>
+                    <label for="ownerName">Nome do Dono:</label>
+                    <input type="text" id="ownerName" name="ownerName" placeholder="Digite o nome do dono" required>
+
+                    <label for="ownerPhone">Telefone do Dono:</label>
+                    <input type="tel" id="ownerPhone" name="ownerPhone" placeholder="(XX) XXXXX-XXXX" required>
+
+                    <label>Tipo de Loja:</label>
+                    <div class="store-type-options">
+                        <input type="radio" id="physical" name="storeType" value="physical" required>
+                        <label for="physical">Física</label>
+
+                        <input type="radio" id="web" name="storeType" value="web">
+                        <label for="web">Web</label>
+
+                        <input type="radio" id="both" name="storeType" value="both">
+                        <label for="both">Ambos</label>
+
+                        <input type="radio" id="street" name="storeType" value="street">
+                        <label for="street">Vendedor de Rua</label>
+                    </div>
+
+                    <div id="physicalFields">
+                        <label for="storeCep">CEP da Loja:</label>
+                        <input type="text" id="storeCep" name="storeCep" placeholder="Digite o CEP">
+                        <small id="storeCepResult" style="display: none; color: green;">Rua: </small>
+                    </div>
+
+                    <div id="webFields">
+                        <label for="storeInstagram">Instagram da Loja:</label>
+                        <input type="url" id="storeInstagram" name="storeInstagram" placeholder="https://instagram.com/sualoja">
+                    </div>
+
+                    <div id="bothFields">
+                        <label for="storeCepBoth">CEP da Loja:</label>
+                        <input type="text" id="storeCepBoth" name="storeCepBoth" placeholder="Digite o CEP">
+                        <small id="storeCepBothResult" style="display: none; color: green;">Rua: </small>
+
+                        <label for="storeInstagramBoth">Instagram da Loja:</label>
+                        <input type="url" id="storeInstagramBoth" name="storeInstagramBoth" placeholder="https://instagram.com/sualoja">
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Etapa 3: Contato da Loja -->
+            <div class="step">
+                <fieldset>
+                    <legend>Contato da Loja</legend>
+                    <label for="storePhone">Telefone da Loja:</label>
+                    <input type="tel" id="storePhone" name="storePhone" placeholder="(XX) XXXXX-XXXX">
+
+                    <label for="storeEmail">E-mail da Loja:</label>
+                    <input type="email" id="storeEmail" name="storeEmail" placeholder="exemplo@email.com">
+
+                    <label for="storeWebsite">Site da Loja:</label>
+                    <input type="url" id="storeWebsite" name="storeWebsite" placeholder="https://www.sualoja.com">
+                </fieldset>
+            </div>
+
+            <!-- Navegação do formulário -->
+            <div class="form-navigation">
+                <button type="button" id="prevStep" disabled>&larr; Voltar</button>
+                <button type="button" id="nextStep">Próximo &rarr;</button>
+                <button type="submit" id="submitForm" style="display: none;">Registrar Loja</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2025 Organizador Financeiro para Negócios. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        const steps = document.querySelectorAll(".step");
+        const prevStepButton = document.getElementById("prevStep");
+        const nextStepButton = document.getElementById("nextStep");
+        const submitButton = document.getElementById("submitForm");
+        let currentStep = 0;
+
+        function updateStep() {
+            steps.forEach((step, index) => {
+                step.classList.toggle("active", index === currentStep);
+            });
+
+            prevStepButton.disabled = currentStep === 0;
+            nextStepButton.style.display = currentStep === steps.length - 1 ? "none" : "inline-block";
+            submitButton.style.display = currentStep === steps.length - 1 ? "inline-block" : "none";
+        }
+
+        prevStepButton.addEventListener("click", () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        nextStepButton.addEventListener("click", () => {
+            const currentFields = steps[currentStep].querySelectorAll("input[required]");
+            let allValid = true;
+
+            currentFields.forEach((field) => {
+                if (!field.checkValidity()) {
+                    allValid = false;
+                    field.reportValidity();
+                }
+            });
+
+            if (allValid && currentStep < steps.length - 1) {
+                currentStep++;
+                updateStep();
+            }
+        });
+
+        updateStep();
+
+        // Exibe campos adicionais com base no tipo de loja selecionado
+        document.querySelectorAll('input[name="storeType"]').forEach((radio) => {
+            radio.addEventListener("change", (event) => {
+                // Remove a classe active de todos os campos dinâmicos
+                document.getElementById("physicalFields").classList.remove("active");
+                document.getElementById("webFields").classList.remove("active");
+                document.getElementById("bothFields").classList.remove("active");
+
+                // Adiciona a classe active ao campo correspondente
+                if (event.target.value === "physical") {
+                    document.getElementById("physicalFields").classList.add("active");
+                } else if (event.target.value === "web") {
+                    document.getElementById("webFields").classList.add("active");
+                } else if (event.target.value === "both") {
+                    document.getElementById("bothFields").classList.add("active");
+                }
+            });
+        });
+
+        document.getElementById("registerStoreForm").addEventListener("submit", (event) => {
+            event.preventDefault(); // Impede o envio real do formulário
+            alert("Loja registrada com sucesso!");
+            // Aqui você pode adicionar lógica para salvar os dados no banco de dados
+        });
+
+        function fetchAddress(cep, resultElementId) {
+            if (cep.length === 8) { // O CEP deve ter 8 dígitos
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.erro) {
+                            document.getElementById(resultElementId).textContent = "CEP inválido.";
+                            document.getElementById(resultElementId).style.color = "red";
+                        } else {
+                            document.getElementById(resultElementId).textContent = `Rua: ${data.logradouro}`;
+                            document.getElementById(resultElementId).style.color = "green";
+                        }
+                        document.getElementById(resultElementId).style.display = "block";
+                    })
+                    .catch(() => {
+                        document.getElementById(resultElementId).textContent = "Erro ao buscar o endereço.";
+                        document.getElementById(resultElementId).style.color = "red";
+                        document.getElementById(resultElementId).style.display = "block";
+                    });
+            } else {
+                document.getElementById(resultElementId).textContent = "CEP deve ter 8 dígitos.";
+                document.getElementById(resultElementId).style.color = "red";
+                document.getElementById(resultElementId).style.display = "block";
+            }
+        }
+
+        // Adiciona eventos para os campos de CEP
+        document.getElementById("storeCep").addEventListener("input", (event) => {
+            const cep = event.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+            fetchAddress(cep, "storeCepResult");
+        });
+
+        document.getElementById("storeCepBoth").addEventListener("input", (event) => {
+            const cep = event.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+            fetchAddress(cep, "storeCepBothResult");
+        });
+    </script>
+</body>
+</html>
