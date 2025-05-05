@@ -59,6 +59,45 @@ nav {
     text-decoration: underline;
 }
 
+/* Barra de navegação */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.navbar .menu {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.navbar .menu a:hover {
+    color: #d4f5d4;
+}
+
+.navbar .user-info {
+    font-size: 1rem;
+}
+
 /* Conteúdo principal */
 main {
     flex: 1; /* Faz o conteúdo principal ocupar o espaço restante */
@@ -67,7 +106,7 @@ main {
     justify-content: center; /* Centraliza verticalmente */
     align-items: center; /* Centraliza horizontalmente */
     padding: 20px;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto; /* Centraliza horizontalmente */
 }
 
