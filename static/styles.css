@@ -1,8 +1,10 @@
 /* Estilo geral */
 body {
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9; /* Cor de fundo suave */
     color: #333; /* Texto em cinza escuro */
     line-height: 1.6;
@@ -59,9 +61,14 @@ nav {
 
 /* Conteúdo principal */
 main {
+    flex: 1; /* Faz o conteúdo principal ocupar o espaço restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
     padding: 20px;
     max-width: 800px;
-    margin: 0 auto; /* Centraliza o conteúdo */
+    margin: 0 auto; /* Centraliza horizontalmente */
 }
 
 /* Seções */
@@ -89,23 +96,23 @@ a:hover {
 }
 
 /* Login Form */
-.login-form {
+.login-form, .signup-form {
     max-width: 400px;
-    margin: 20px auto;
+    width: 100%;
     padding: 20px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.login-form label {
+.login-form label, .signup-form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
 }
 
-.login-form input {
+.login-form input, .signup-form input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -114,7 +121,7 @@ a:hover {
     font-size: 1rem;
 }
 
-.login-form button {
+.login-form button, .signup-form button {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -125,7 +132,7 @@ a:hover {
     cursor: pointer;
 }
 
-.login-form button:hover {
+.login-form button:hover, .signup-form button:hover {
     background-color: #45a049;
 }
 
@@ -146,7 +153,7 @@ footer {
     background-color: #333;
     color: white;
     font-size: 0.9rem;
-    margin-top: 20px;
+    margin-top: auto; /* Empurra o rodapé para o final */
 }
 
 button {
