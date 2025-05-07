@@ -71,7 +71,23 @@
                 }
             } catch (error) {
                 console.error("Erro ao fazer login:", error);
-                alert("Erro ao fazer login. Por favor, tente novamente.");
+
+                switch (error.code) {
+                    case "auth/invalid-email":
+                        alert("O e-mail inserido é inválido. Por favor, insira um e-mail válido.");
+                        break;
+                    case "auth/user-not-found":
+                        alert("Usuário não encontrado. Verifique o e-mail ou cadastre-se.");
+                        break;
+                    case "auth/wrong-password":
+                        alert("Senha incorreta. Por favor, tente novamente.");
+                        break;
+                    case "auth/too-many-requests":
+                        alert("Muitas tentativas de login falharam. Tente novamente mais tarde.");
+                        break;
+                    default:
+                        alert("Erro ao fazer login. Por favor, tente novamente.");
+                }
             }
         }
 

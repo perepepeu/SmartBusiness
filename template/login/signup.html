@@ -71,7 +71,23 @@
                 window.location.href = "login.html"; // Redireciona para a página de login
             } catch (error) {
                 console.error("Erro ao criar conta:", error);
-                alert("Erro ao criar conta. Por favor, tente novamente.");
+
+                switch (error.code) {
+                    case "auth/email-already-in-use":
+                        alert("O e-mail inserido já está em uso. Por favor, use outro e-mail ou faça login.");
+                        break;
+                    case "auth/invalid-email":
+                        alert("O e-mail inserido é inválido. Por favor, insira um e-mail válido.");
+                        break;
+                    case "auth/weak-password":
+                        alert("A senha é muito fraca. Use pelo menos 6 caracteres.");
+                        break;
+                    case "auth/network-request-failed":
+                        alert("Erro de conexão. Verifique sua internet e tente novamente.");
+                        break;
+                    default:
+                        alert("Erro ao criar conta. Por favor, tente novamente.");
+                }
             }
         }
 
